@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Gaji</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 700px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Hitung Gaji</h2>
+        <div class="card p-4">
+            <p><strong>Nama:</strong> <span id="namaKaryawan"></span></p>
+            <p><strong>Gaji Pokok:</strong> Rp 2.500.000</p>
+            <p><strong>Tunjangan:</strong> Rp <span id="tunjanganKaryawan"></span></p>
+            <p><strong>Jumlah Kehadiran:</strong> <span id="kehadiranKaryawan"></span> hari</p>
+            <p><strong>Gaji Harian:</strong> Rp 5.000</p>
+            <hr>
+            <p><strong>Total Gaji:</strong> Rp <span id="totalGaji"></span></p>
+            <button class="btn btn-warning mt-3" id="approveBtn">Persetujuan Staff Keuangan</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Ambil data dari LocalStorage
+        const karyawan = JSON.parse(localStorage.getItem('karyawan'));
+
+        if (!karyawan) {
+            alert('Data karyawan tidak ditemukan. Silakan input data terlebih dahulu.');
+            window.location.href = 'input.html';
+        }
+
+        const nama = karyawan.nama;
+        const tunjangan = karyawan.tunjangan;
+        const kehadiran = karyawan.kehadiran;
+        const gajiPokok = 2500000;
+        const gajiHarian = 5000;
+        const totalGaji = gajiPokok + tunjangan + (kehadiran * gajiHarian);
+
+        // Tampilkan data
+        document.getElementById('namaKaryawan').innerText = nama;
+        document.getElementById('tunjanganKaryawan').innerText = tunjangan.toLocaleString();
+        document.getElementById('kehadiranKaryawan').innerText = kehadiran;
+        document.getElementById('totalGaji').innerText = totalGaji.toLocaleString();
+
+        // Handle Approval Button
+        document.getElementById('approveBtn').addEventListener('click', function() {
+            // Simpan status persetujuan
+            localStorage.setItem('approved', 'true');
+            // Simpan total gaji
+            localStorage.setItem('totalGaji', totalGaji);
+            // Redirect ke halaman Slip Gaji
+            window.location.href = 'approval.html';
+        });
+    </script>
+</body>
+</html>

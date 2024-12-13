@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data Karyawan</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.586);
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        .button-gradient {
+            background: linear-gradient(45deg, #ff6b6b, #f1c40f);
+            color: white;
+            border: none;
+        }
+
+        /* Responsiveness for smaller screens */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 90%;
+                padding: 15px;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            .btn {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Input Data Karyawan</h2>
+        <form id="formInput">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama Karyawan</label>
+                <input type="text" class="form-control" id="nama" placeholder="Masukkan Nama Karyawan" required>
+            </div>
+            <div class="mb-3">
+                <label for="tunjangan" class="form-label">Tunjangan</label>
+                <input type="number" class="form-control" id="tunjangan" placeholder="Masukkan Tunjangan" required>
+            </div>
+            <div class="mb-3">
+                <label for="kehadiran" class="form-label">Jumlah Kehadiran (Hari)</label>
+                <input type="number" class="form-control" id="kehadiran" placeholder="Masukkan Jumlah Kehadiran" required>
+            </div>
+            <button type="submit" class="btn button-gradient">Tambah Karyawan</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('formInput').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nama = document.getElementById('nama').value.trim();
+            const tunjangan = parseInt(document.getElementById('tunjangan').value);
+            const kehadiran = parseInt(document.getElementById('kehadiran').value);
+            
+            if (nama === '' || isNaN(tunjangan) || isNaN(kehadiran)) {
+                alert('Silakan isi semua field dengan benar.');
+                return;
+            }
+
+            // Simpan data ke LocalStorage
+            const karyawan = {
+                nama: nama,
+                tunjangan: tunjangan,
+                kehadiran: kehadiran
+            };
+            localStorage.setItem('karyawan', JSON.stringify(karyawan));
+
+            // Redirect ke halaman Hitung Gaji
+            window.location.href = 'calculate.html';
+        });
+    </script>
+</body>
+</html>
